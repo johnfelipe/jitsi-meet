@@ -10,6 +10,7 @@ import { appNavigate } from '../../app';
 import { setUnsupportedBrowser } from '../../unsupported-browser';
 
 declare var APP: Object;
+declare var config: Object;
 declare var JitsiMeetJS: Object;
 
 const JitsiConferenceEvents = JitsiMeetJS.events.conference;
@@ -71,6 +72,10 @@ export function connect() {
             });
 
             APP.keyboardshortcut.init();
+
+            if (config.requireDisplayName && !APP.settings.getDisplayName()) {
+                APP.UI.promptDisplayName();
+            }
         })
             .catch(err => {
                 APP.UI.hideRingOverLay();
